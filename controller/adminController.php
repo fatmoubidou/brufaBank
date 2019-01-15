@@ -1,8 +1,16 @@
 <?php
 
-function loginUser() {
-  echo "Voici la login";
+/**
+ *
+ */
+class adminController 
+{
+
+  public function loginUser() {
+    echo "Voici la login";
+  }
 }
+
 
 
  ?>

@@ -17,11 +17,12 @@ function getCurrentRequest() {
 function checkUserCredential($route) {
   session_start();
   $config = getGlobalConfig();
-  if(!isset($_SESSION["user"]) || !isset($_SESSION["user"]["status"])) {
+  var_dump($_SESSION["user"]);
+  if(!isset($_SESSION["user"]) || $_SESSION["user"]->getStatus() === NULL) {
     redirectTo($config["defaultRoute"]);
   }
   $roles = $config["status"];
-  $userRole = $_SESSION["user"]["status"];
+  $userRole = $_SESSION["user"]->getStatus();
   if(!in_array($userRole, $roles) || (array_search($userRole, $roles) < array_search($route["status"], $roles))) {
     redirectTo($config["defaultRoute"]);
   }
@@ -103,8 +104,11 @@ function route() {
         return;
       }
       //On charge le controller concerné et on appelle la fonction définies dans la configuration
-      require "controller/" . $route[0] . "Controller.php";
-      $route[1]();
+      $controller = $route[0] . "Controller";
+      require "controller/" . $controller . ".php";
+      $controller = new  $controller;
+      $function = $route[1];
+      $controller->$function();
       return;
     }
     else {

@@ -20,7 +20,7 @@ function getRoutes() {
     ],
     "login" => [
       "admin",
-      "loginUser"
+      "loginUser",
     ]
   ];
 }
