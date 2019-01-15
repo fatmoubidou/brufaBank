@@ -2,12 +2,12 @@
 /**
  *
  */
-class exempleController
+class accountController
 {
 
-  public function welcome() {
+  public function listAccount() {
       $message = "Bonjour voici un boilerplate PHP intégrant un système de routing";
-      require "view/exempleView.php";
+      require "view/listAccountView.php";
     }
 }
 
