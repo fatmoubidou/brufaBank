@@ -15,12 +15,12 @@
 function getRoutes() {
   return [
     "" => [
-      "account",
-      "listAccount"
+      "user",
+      "login"
     ],
-    "login" => [
-      "admin",
-      "loginUser",
+    "listUsers" => [
+      "listUsers",
+      "getUsers",
     ]
   ];
 }
