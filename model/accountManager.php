@@ -42,7 +42,8 @@
     $query = $this->_db->prepare("update account set sum=:sum where id=:id");
     $query->bindValue(':id', $account->getId(), PDO::PARAM_INT);
     $query->bindValue(':sum', $account->getSum());
-    $query->execute();
+    $result = $query->execute();
+    return $result;
   }
 
   public function delete(int $id){

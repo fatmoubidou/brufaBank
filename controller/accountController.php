@@ -2,6 +2,8 @@
 require "model/dataBase.php";
 require "model/entity/account.php";
 require "model/accountManager.php";
+require "model/entity/transaction.php";
+require "model/transactionManager.php";
 /**
  *
  */
@@ -28,11 +30,31 @@ class accountController
 
 
   public function debitAccount(){
-    $manager = new accountManager();
+    $accountManager = new accountManager();
     $id = intval($_GET["id"]);
+    $account = $accountManager->get($id);
+
+    switch ($_GET["o"]) {
+      case 'credit':
+        $operation = "dépôt";
+        break;
+      case 'debit':
+        $operation = "retrait";
+        break;
+      case 'transfer':
+        $operation = "virement";
+        break;
+    }
+    
     if (!empty($_POST)) {
-      if ($manager->update($id)) {
-        redirectTo("accounts?id=1");
+      $newSum = $account->getSum() - $_POST["amount"];
+      $account->setSum($newSum);
+      if ($accountManager->update($account)) {
+        $transactionManager = new transactionManager();
+        $transaction = new transaction($_POST);
+        if ($transactionManager->add($transaction)) {
+          redirectTo("myAccount?id=".$account->getId());
+        }
       }
     }
     // Affichage du form de retrait d'argent

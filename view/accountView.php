@@ -33,23 +33,9 @@
                 <p class="text-right"><span class="text-muted mr-2">Disponible</span><span class="h1"><?php echo $account->getSum()."€"; ?></span></p>
               </div>
           </div>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between">
-                <h6 class="my-0"><a <?php setHref(""); ?>>Dépôt</a></h6>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <h6 class="my-0"><a <?php setHref("account/debit", ["id"=>$account->getId()]); ?>>Retrait</a></h6>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <h6 class="my-0"><a <?php setHref(""); ?>>Virement</a></h6>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-                <h6 class="my-0"><a <?php setHref(""); ?>>Suppression</a></h6>
-            </li>
-          </ul>
+          <?php include "view/feature/operationsFeature.php"; ?>
         </div>
-      </div>
-
+      </div>      
   </div>
 </div>
 
