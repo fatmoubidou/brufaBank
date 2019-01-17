@@ -2,9 +2,7 @@
 <footer class="header py-3">
         <div class="container">
           <div class="row flex-nowrap justify-content-between align-items-center">
-            <div class="col-4">
-            </div>
-            <div class="col-4 text-center">
+            <div class="text-center">
               <a class="header-logo text-dark" href="#">BrufaBank</a>
             </div>
           </div>
