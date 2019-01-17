@@ -11,7 +11,8 @@
                   <tr class="text-center d-flex">
                     <th class="col-4 text-left">Intitulé du compte</th>
                     <th class="col-4 d-none d-md-table-cell">N° de compte</th>
-                    <th class="col-4 d-none d-lg-table-cell">Montant</th>
+                    <th class="col-2 d-none d-lg-table-cell">Montant</th>
+                    <th class="col-2 d-none d-lg-table-cell">Supprimer</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -21,9 +22,11 @@
                     foreach ($accounts as $key => $account) {
                   ?>
                   <tr class="text-center d-flex">
-                    <td class="col-4 text-left"><?php echo $account->getName(); ?></td>
+
+                    <td class="col-4 text-left"><a <?php setHref("myAccount", ["id"=>$account->getId()]); ?> ><?php echo $account->getName(); ?></a></td>
                     <td class="col-4 d-none d-md-table-cell"><?php echo $account->getNumber(); ?></td>
-                    <td class="col-4 d-none d-lg-table-cell"><?php echo $account->getSum(); ?></td>
+                    <td class="col-2 d-none d-lg-table-cell"><?php echo $account->getSum(); ?></td>
+                    <td class="col-2 d-none d-lg-table-cell"><a <?php setHref("account/delete", ["id"=>$account->getId()]); ?>><i class="fas fa-times-circle"></i></a> </td>
                   </tr>
                   <?php
                     }

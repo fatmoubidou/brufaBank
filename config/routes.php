@@ -15,13 +15,43 @@
 function getRoutes() {
   return [
     "" => [
-      "account",
-      "listAccount"
+      "admin",
+      "loginUser"
     ],
     "login" => [
       "admin",
       "loginUser",
-    ]
+    ],
+
+    //***** ACCOUNT *****//
+    "accounts" => [
+      "account",
+      "listAccount",
+      ["id" => ["integer"]
+      ],
+      //"status" => "user"
+     ],
+     "myAccount" => [
+       "account",
+       "detailAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/debit" => [
+       "account",
+       "debitAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/delete" => [
+       "account",
+       "deleteAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
   ];
 }
 
