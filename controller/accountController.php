@@ -40,12 +40,18 @@ class accountController
 
     if (isset($_POST) && !empty($_POST)) {
       $newSum = $account->getSum() - $_POST["amount"];
+      // test du decouvert
+      if (intval($newSum) < account::OVERDRAFT* -1) {
+        $alertDecouvert = "Vous avez atteint le plafond de votre découvert autorisé de ".account::OVERDRAFT."€.<br>La transaction est annulée.";
+        //return;
+      }else {
       $account->setSum($newSum);
-      if ($accountManager->update($account)) {
-        $transactionManager = new transactionManager();
-        $transaction = new transaction($_POST);
-        if ($transactionManager->add($transaction)) {
-          redirectTo("myAccount?id=".$account->getId());
+        if ($accountManager->update($account)) {
+          $transactionManager = new transactionManager();
+          $transaction = new transaction($_POST);
+          if ($transactionManager->add($transaction)) {
+            redirectTo("myAccount?id=".$account->getId());
+          }
         }
       }
     }
@@ -84,21 +90,27 @@ class accountController
       if (isset($_POST) && !empty($_POST)) {
         //debit du compte N°1
         $newSum1 = $account->getSum() - $_POST["amount"];
-        $account->setSum($newSum1);
-        //credit du compte N°2
-        $account2 = $accountManager->getNumber($_POST["idAccountTransfer"]);
-        $newSum2 = $account2->getSum() + $_POST["amount"];
-        $account2->setSum($newSum2);
+        // test du decouvert
+        if (intval($newSum1) < account::OVERDRAFT* -1) {
+          $alertDecouvert = "Vous avez atteint le plafond de votre découvert autorisé de ".account::OVERDRAFT."€.<br>La transaction est annulée.";
+        }else {
+          $account->setSum($newSum1);
+          //credit du compte N°2
+          $account2 = $accountManager->getNumber($_POST["idAccountTransfer"]);
+          $newSum2 = $account2->getSum() + $_POST["amount"];
+          $account2->setSum($newSum2);
 
-        if ($accountManager->update($account2)) {
-          if ($accountManager->update($account)) {
-            $transactionManager = new transactionManager();
-            $transaction = new transaction($_POST);
-            if ($transactionManager->add($transaction)) {
-              redirectTo("myAccount?id=".$account->getId());
+          if ($accountManager->update($account2)) {
+            if ($accountManager->update($account)) {
+              $transactionManager = new transactionManager();
+              $transaction = new transaction($_POST);
+              if ($transactionManager->add($transaction)) {
+                redirectTo("myAccount?id=".$account->getId());
+              }
             }
           }
         }
+
       }
       // Affichage du form de retrait d'argent
       require "view/activityAccountView.php";

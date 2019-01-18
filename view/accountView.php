@@ -4,7 +4,9 @@
       <div class="row mt-5 mb-3 row ">
         <div class="col-md d-flex justify-content-between">
           <h2>Détails du compte N°<?php echo $account->getNumber(); ?></h2>
-          <a class="btn btn-primary" <?php setHref("accounts", ["id"=>$account->getId()]); //user  ?> >Liste des comptes</a> 
+          <div class="">
+            <a class="btn btn-primary" <?php setHref("accounts", ["id"=>$account->getId()]); //user  ?> >Liste des comptes</a> 
+          </div>
         </div>
       </div>
       <div class="row">
