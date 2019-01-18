@@ -24,6 +24,9 @@ class accountController
     $id = intval($_GET["id"]);
     //recuperation de la liste de tous les comptes dans la bdd
     $account = $manager->get($id);
+
+    $transactionManager = new transactionManager();
+    $transactions = $transactionManager->getList($account->getId());
     // Affichage liste des comptes
     require "view/accountView.php";
     }
@@ -33,20 +36,9 @@ class accountController
     $accountManager = new accountManager();
     $id = intval($_GET["id"]);
     $account = $accountManager->get($id);
+    $operation = "retrait";
 
-    switch ($_GET["o"]) {
-      case 'credit':
-        $operation = "dépôt";
-        break;
-      case 'debit':
-        $operation = "retrait";
-        break;
-      case 'transfer':
-        $operation = "virement";
-        break;
-    }
-    
-    if (!empty($_POST)) {
+    if (isset($_POST) && !empty($_POST)) {
       $newSum = $account->getSum() - $_POST["amount"];
       $account->setSum($newSum);
       if ($accountManager->update($account)) {
@@ -57,9 +49,61 @@ class accountController
         }
       }
     }
-    // Affichage du form de retrait d'argent
+    // Affichage du form de depot d'argent
     require "view/activityAccountView.php";
+  }
+
+    public function creditAccount(){
+      $accountManager = new accountManager();
+      $id = intval($_GET["id"]);
+      $account = $accountManager->get($id);
+      $operation = "dépôt";
+
+      if (isset($_POST) && !empty($_POST)) {
+        $newSum = $account->getSum() + $_POST["amount"];
+        $account->setSum($newSum);
+        if ($accountManager->update($account)) {
+          $transactionManager = new transactionManager();
+          $transaction = new transaction($_POST);
+          if ($transactionManager->add($transaction)) {
+            redirectTo("myAccount?id=".$account->getId());
+          }
+        }
+      }
+      // Affichage du form de retrait d'argent
+      require "view/activityAccountView.php";
     }
+
+    public function transferAccount(){
+      $operation = "virement";
+      $accountManager = new accountManager();
+      $id = intval($_GET["id"]);
+      $account = $accountManager->get($id);
+
+
+      if (isset($_POST) && !empty($_POST)) {
+        //debit du compte N°1
+        $newSum1 = $account->getSum() - $_POST["amount"];
+        $account->setSum($newSum1);
+        //credit du compte N°2
+        $account2 = $accountManager->getNumber($_POST["idAccountTransfer"]);
+        $newSum2 = $account2->getSum() + $_POST["amount"];
+        $account2->setSum($newSum2);
+
+        if ($accountManager->update($account2)) {
+          if ($accountManager->update($account)) {
+            $transactionManager = new transactionManager();
+            $transaction = new transaction($_POST);
+            if ($transactionManager->add($transaction)) {
+              redirectTo("myAccount?id=".$account->getId());
+            }
+          }
+        }
+      }
+      // Affichage du form de retrait d'argent
+      require "view/activityAccountView.php";
+    }
+
 
   public function deleteAccount(){
     $manager = new accountManager();

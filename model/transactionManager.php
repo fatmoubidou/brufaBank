@@ -18,12 +18,13 @@
 
 
   public function add(transaction $transaction){
-    $query = $this->_db->prepare("insert into transaction (operation, name, amount, date, idAccount) values (:operation, :name, :amount, :date, :idAccount)");
+    $query = $this->_db->prepare("insert into transaction (operation, name, amount, date, idAccount, idAccountTransfer) values (:operation, :name, :amount, :date, :idAccount, :idAccountTransfer)");
     $query->bindValue(':operation', $transaction->getOperation());
     $query->bindValue(':name', $transaction->getName());
     $query->bindValue(':amount', $transaction->getAmount());
     $query->bindValue(':date', $transaction->getDate());
     $query->bindValue(':idAccount', $transaction->getIdAccount());
+    $query->bindValue(':idAccountTransfer', $transaction->getIdAccountTransfer());
     $result = $query->execute();
     return $result;
   }

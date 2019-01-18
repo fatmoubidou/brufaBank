@@ -1,29 +1,36 @@
-<form action="" method="post">
+<form action="" method="post" class="needs-validation" novalidate>
     <div class="">
       <div class="mb-3">
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Intitulé</span>
+            <div class="input-group-prepend" style="width: 22%;">
+              <span class="input-group-text w-100">Intitulé</span>
             </div>
-            <input type="text" class="form-control" name="name" placeholder="Intitulé">
+            <input type="text" class="form-control" name="name" placeholder="Intitulé" required>
+            <div class="invalid-feedback">Veuillez saisir un intitulé d'opération.</div>
           </div>
         </div>
     </div>
-    <div class="row">
-      <!-- <div class="col-md-6 mb-3">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Date</span>
-          </div>
-          <input type="text" class="form-control" name="date" placeholder="Date" value="<?php //echo date("d/m/Y"); ?>" disabled >
-        </div>
-        </div> -->
-        <div class="col-md-6 mb-3">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Montant</span>
+    <?php if ($operation === "virement"): ?>
+      <div class="">
+        <div class="mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend" style="width: 22%;">
+                <span class="input-group-text w-100">Compte à créditer</span>
+              </div>
+              <input type="text" class="form-control" name="idAccountTransfer" placeholder="N° du compte à créditer" required>
+              <div class="invalid-feedback">Veuillez saisir un N° de compte à créditer.</div>
             </div>
-            <input type="number" class="form-control" name="amount" placeholder="Montant" >
+          </div>
+      </div>
+    <?php endif; ?>
+    <div class="">
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend" style="width: 22%;">
+              <span class="input-group-text w-100">Montant</span>
+            </div>
+            <input type="number" class="form-control" name="amount" placeholder="en €" required>
+            <div class="invalid-feedback">Veuillez saisir un montant.</div>
           </div>
         </div>
     </div>

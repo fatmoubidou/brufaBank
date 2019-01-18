@@ -11,6 +11,7 @@ class transaction extends entity
   protected $amount;
   protected $date;
   protected $idAccount;
+  protected $idAccountTransfer;
 
   public function setId($id) {
     $this->id = $id;
@@ -26,6 +27,14 @@ class transaction extends entity
 
   public function getIdAccount() {
     return $this->idAccount;
+  }
+
+  public function setIdAccountTransfer($idAccountTransfer) {
+    $this->idAccountTransfer = $idAccountTransfer;
+  }
+
+  public function getIdAccountTransfer() {
+    return $this->idAccountTransfer;
   }
 
   public function setOperation($operation) {

@@ -42,24 +42,21 @@ function getRoutes() {
       "account/credit" => [
        "account",
        "creditAccount",
-       ["id" => ["integer"],
-       "o"=>["string"]
+       ["id" => ["integer"]
        ],
        //"status" => "user"
       ],
       "account/debit" => [
        "account",
        "debitAccount",
-       ["id" => ["integer"],
-       "o"=>["string"]
+       ["id" => ["integer"]
        ],
        //"status" => "user"
       ],
       "account/transfer" => [
        "account",
        "transferAccount",
-       ["id" => ["integer"],
-       "o"=>["string"]
+       ["id" => ["integer"]
        ],
        //"status" => "user"
       ],
