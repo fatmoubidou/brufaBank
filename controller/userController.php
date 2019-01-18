@@ -12,10 +12,10 @@ require "model/entity/user.php";
       if (!empty($_POST)) {
             if($user = $manager->getUser($user)) {
               initializeUserSession($user);
-              if ($_SESSION["user"]["status"] === "admin") {
+              if ($_SESSION["user"]->getStatus() === "admin") {
                 redirectTo("listUsers");
               }else {
-                redirectTo("");
+                redirectTo("accounts");
               }
              }
              else {
