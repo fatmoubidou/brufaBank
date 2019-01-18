@@ -39,9 +39,23 @@ function getRoutes() {
        ],
        //"status" => "user"
       ],
+      "account/credit" => [
+       "account",
+       "creditAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
       "account/debit" => [
        "account",
        "debitAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/transfer" => [
+       "account",
+       "transferAccount",
        ["id" => ["integer"]
        ],
        //"status" => "user"

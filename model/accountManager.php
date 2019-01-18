@@ -29,6 +29,19 @@
     return $account;
   }
 
+  public function getNumber(int $number){
+
+    //$query = $this->_db->query('SELECT a.*, u.* FROM `account` a inner join user u on u.id = a.idUser WHERE a.id='.$id);
+    $query = $this->_db->query('SELECT * FROM `account` WHERE number='.$number);
+    $result =$query->fetch(PDO::FETCH_ASSOC);
+    if ($result)
+    {
+      $account = new Account($result);
+    }
+
+    return $account;
+  }
+
   public function add(Account $account){
     $query = $this->_db->prepare("insert into account (number, name, sum, idUser) values (:number, :name, :sum, :idUser)");
     $query->bindValue(':number', $account->getNumber());
@@ -42,7 +55,8 @@
     $query = $this->_db->prepare("update account set sum=:sum where id=:id");
     $query->bindValue(':id', $account->getId(), PDO::PARAM_INT);
     $query->bindValue(':sum', $account->getSum());
-    $query->execute();
+    $result = $query->execute();
+    return $result;
   }
 
   public function delete(int $id){
