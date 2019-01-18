@@ -15,7 +15,7 @@ require "model/entity/user.php";
               if ($_SESSION["user"]->getStatus() === "admin") {
                 redirectTo("listUsers");
               }else {
-                redirectTo("accounts");
+                redirectTo("accounts",["id"=>$_SESSION["user"]->getId()]);
               }
              }
              else {
@@ -25,6 +25,13 @@ require "model/entity/user.php";
           }
         require "view/loginView.php";
       }
-    }
+
+   public function deconnexion(){
+     logout();
+     redirectTo("login");
+   }
+
+
+  }
 
 ?>

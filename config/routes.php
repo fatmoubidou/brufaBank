@@ -19,9 +19,17 @@ function getRoutes() {
       "user",
       "login"
     ],
+    "login" => [
+      "user",
+      "login"
+    ],
     "listUsers" => [
       "listUsers",
       "getUsers",
+    ],
+    "logout" => [
+      "user",
+      "deconnexion",
     ],
 
     //***** ACCOUNT *****//

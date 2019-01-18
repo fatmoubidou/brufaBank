@@ -1,5 +1,6 @@
 <?php
 require "model/dataBase.php";
+require "model/entity/user.php";
 require "model/entity/account.php";
 require "model/accountManager.php";
 require "model/entity/transaction.php";
@@ -22,12 +23,12 @@ class accountController
   public function detailAccount() {
     $manager = new accountManager();
     $id = intval($_GET["id"]);
-    //recuperation de la liste de tous les comptes dans la bdd
+    //recuperation du compte dans la bdd
     $account = $manager->get($id);
 
     $transactionManager = new transactionManager();
     $transactions = $transactionManager->getList($account->getId());
-    // Affichage liste des comptes
+    // Affichage du compte
     require "view/accountView.php";
     }
 
