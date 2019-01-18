@@ -14,6 +14,7 @@
 //]
 function getRoutes() {
   return [
+
     "" => [
       "user",
       "login"
@@ -21,7 +22,51 @@ function getRoutes() {
     "listUsers" => [
       "listUsers",
       "getUsers",
-    ]
+    ],
+
+    //***** ACCOUNT *****//
+    "accounts" => [
+      "account",
+      "listAccount",
+      ["id" => ["integer"]
+      ],
+      //"status" => "user"
+     ],
+     "myAccount" => [
+       "account",
+       "detailAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/credit" => [
+       "account",
+       "creditAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/debit" => [
+       "account",
+       "debitAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/transfer" => [
+       "account",
+       "transferAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/delete" => [
+       "account",
+       "deleteAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
   ];
 }
 
