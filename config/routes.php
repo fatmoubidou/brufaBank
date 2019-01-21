@@ -24,8 +24,22 @@ function getRoutes() {
       "login"
     ],
     "listUsers" => [
-      "listUsers",
-      "getUsers",
+      "user",
+      "listUsers"
+    ],
+    "createUser" => [
+      "user",
+      "createUser"
+    ],
+    "delUser" => [
+      "user",
+      "delUser"
+    ],
+    "addAccount" => [
+      "user",
+      "addAccountUser",
+      ["id" => ["integer"]
+    ],
     ],
     "logout" => [
       "user",

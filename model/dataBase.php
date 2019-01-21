@@ -4,9 +4,9 @@
  */
 class dataBase {
   const host  = "localhost";
-  const dbName = "bank";
+  const dbName = "banque";
   const login = "root";
-  const mdp = "test";
+  const mdp = "root";
   static public function BD() {
     $db = new PDO("mysql:host=" . self::host .";dbname=" . self::dbName , self::login, self::mdp);
     return $db;
