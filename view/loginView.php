@@ -4,6 +4,10 @@
  <main>
    <?php session_start(); ?>
    <?php include "view/form/loginForm.php"; ?>
-   <?php var_dump($user); ?>
+   <?php
+    // var_dump($user);
+    ?>
  </main>
- <?php include "view/template/footer.php"; ?>
+ <?php
+ // include "view/template/footer.php";
+ ?>
