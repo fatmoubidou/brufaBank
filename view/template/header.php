@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>BrufaBank</title>
   </head>
-  <body>
+  <body class="h-100 d-flex flex-column justify-content-between">
 
       <header class="header py-3">
         <div class="container">
@@ -32,3 +32,4 @@
           </div>
         </div>
       </header>
+      <main class="h-100 d-flex">

@@ -1,7 +1,10 @@
 <?php
 require "model/dataBase.php";
+require "model/entity/user.php";
 require "model/entity/account.php";
 require "model/accountManager.php";
+require "model/entity/transaction.php";
+require "model/transactionManager.php";
 /**
  *
  */
@@ -20,24 +23,100 @@ class accountController
   public function detailAccount() {
     $manager = new accountManager();
     $id = intval($_GET["id"]);
-    //recuperation de la liste de tous les comptes dans la bdd
+    //recuperation du compte dans la bdd
     $account = $manager->get($id);
-    // Affichage liste des comptes
+
+    $transactionManager = new transactionManager();
+    $transactions = $transactionManager->getList($account->getId());
+    // Affichage du compte
     require "view/accountView.php";
     }
 
 
   public function debitAccount(){
-    $manager = new accountManager();
+    $accountManager = new accountManager();
     $id = intval($_GET["id"]);
-    if (!empty($_POST)) {
-      if ($manager->update($id)) {
-        redirectTo("accounts?id=1");
+    $account = $accountManager->get($id);
+    $operation = "retrait";
+
+    if (isset($_POST) && !empty($_POST)) {
+      $newSum = $account->getSum() - $_POST["amount"];
+      // test du decouvert
+      if (intval($newSum) < account::OVERDRAFT* -1) {
+        $alertDecouvert = "Vous avez atteint le plafond de votre découvert autorisé de ".account::OVERDRAFT."€.<br>La transaction est annulée.";
+        //return;
+      }else {
+      $account->setSum($newSum);
+        if ($accountManager->update($account)) {
+          $transactionManager = new transactionManager();
+          $transaction = new transaction($_POST);
+          if ($transactionManager->add($transaction)) {
+            redirectTo("myAccount?id=".$account->getId());
+          }
+        }
       }
     }
-    // Affichage du form de retrait d'argent
+    // Affichage du form de depot d'argent
     require "view/activityAccountView.php";
+  }
+
+    public function creditAccount(){
+      $accountManager = new accountManager();
+      $id = intval($_GET["id"]);
+      $account = $accountManager->get($id);
+      $operation = "dépôt";
+
+      if (isset($_POST) && !empty($_POST)) {
+        $newSum = $account->getSum() + $_POST["amount"];
+        $account->setSum($newSum);
+        if ($accountManager->update($account)) {
+          $transactionManager = new transactionManager();
+          $transaction = new transaction($_POST);
+          if ($transactionManager->add($transaction)) {
+            redirectTo("myAccount?id=".$account->getId());
+          }
+        }
+      }
+      // Affichage du form de retrait d'argent
+      require "view/activityAccountView.php";
     }
+
+    public function transferAccount(){
+      $operation = "virement";
+      $accountManager = new accountManager();
+      $id = intval($_GET["id"]);
+      $account = $accountManager->get($id);
+
+
+      if (isset($_POST) && !empty($_POST)) {
+        //debit du compte N°1
+        $newSum1 = $account->getSum() - $_POST["amount"];
+        // test du decouvert
+        if (intval($newSum1) < account::OVERDRAFT* -1) {
+          $alertDecouvert = "Vous avez atteint le plafond de votre découvert autorisé de ".account::OVERDRAFT."€.<br>La transaction est annulée.";
+        }else {
+          $account->setSum($newSum1);
+          //credit du compte N°2
+          $account2 = $accountManager->getNumber($_POST["idAccountTransfer"]);
+          $newSum2 = $account2->getSum() + $_POST["amount"];
+          $account2->setSum($newSum2);
+
+          if ($accountManager->update($account2)) {
+            if ($accountManager->update($account)) {
+              $transactionManager = new transactionManager();
+              $transaction = new transaction($_POST);
+              if ($transactionManager->add($transaction)) {
+                redirectTo("myAccount?id=".$account->getId());
+              }
+            }
+          }
+        }
+
+      }
+      // Affichage du form de retrait d'argent
+      require "view/activityAccountView.php";
+    }
+
 
   public function deleteAccount(){
     $manager = new accountManager();

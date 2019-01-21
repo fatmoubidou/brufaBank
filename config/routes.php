@@ -19,6 +19,10 @@ function getRoutes() {
       "user",
       "login"
     ],
+    "login" => [
+      "user",
+      "login"
+    ],
     "listUsers" => [
       "user",
       "listUsers"
@@ -37,6 +41,10 @@ function getRoutes() {
       ["id" => ["integer"]
     ],
     ],
+    "logout" => [
+      "user",
+      "deconnexion",
+    ],
 
     //***** ACCOUNT *****//
     "accounts" => [
@@ -53,9 +61,23 @@ function getRoutes() {
        ],
        //"status" => "user"
       ],
+      "account/credit" => [
+       "account",
+       "creditAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
       "account/debit" => [
        "account",
        "debitAccount",
+       ["id" => ["integer"]
+       ],
+       //"status" => "user"
+      ],
+      "account/transfer" => [
+       "account",
+       "transferAccount",
        ["id" => ["integer"]
        ],
        //"status" => "user"
