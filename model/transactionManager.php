@@ -12,7 +12,6 @@
     {
       $transactions[] = new transaction($result);
     }
-
     return $transactions;
   }
 
